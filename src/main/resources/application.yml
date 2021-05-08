@@ -2,14 +2,23 @@
 server:
   port: 8080
 
-
 # H2 Database Configuration
 spring:
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:tcp://muhyeon.com:9092/gnuDB
     driver-class-name: org.h2.Driver
     username: sa
-    password: 
+    password: Gnu123!
   h2:
     console:
       enabled: true
+  devtools:
+    restart:
+      enabled: true
+
+# MyBatis Configuration
+mybatis:
+  type-aliases-package: com.example.busreservation.mapper
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    default-statement-timeout: 2000
