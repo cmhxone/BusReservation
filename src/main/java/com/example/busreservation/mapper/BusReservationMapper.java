@@ -7,5 +7,5 @@ import java.util.Map;
 @Mapper
 public interface BusReservationMapper {
 
-    public Map<String, Object> showTables();
+    public Map<String, String> showTables();
 }

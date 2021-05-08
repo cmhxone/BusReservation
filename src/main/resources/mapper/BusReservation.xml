@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.ord/DTD Mapper 3.0/EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.busreservation.mapper.BusReservationMapper">
-    <select id="showTables">
+    <select id="showTables" resultType="HashMap">
         SHOW TABLES;
     </select>
 </mapper>

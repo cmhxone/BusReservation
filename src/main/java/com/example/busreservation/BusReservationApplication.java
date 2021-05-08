@@ -1,10 +1,13 @@
 package com.example.busreservation;
 
+import com.example.busreservation.util.AESUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
+@PropertySource({"classpath:/properties/datasource.yml"})
 @SpringBootApplication()
 public class BusReservationApplication {
 

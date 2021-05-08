@@ -4,11 +4,6 @@ server:
 
 # H2 Database Configuration
 spring:
-  datasource:
-    url: jdbc:h2:tcp://muhyeon.com:9092/gnuDB
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: Gnu123!
   h2:
     console:
       enabled: true

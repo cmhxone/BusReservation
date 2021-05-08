@@ -13,7 +13,7 @@ public class BusReservationServiceImpl implements BusReservationService {
     BusReservationMapper mapper;
 
     @Override
-    public Map<String, Object> showTables() {
+    public Map<String, String> showTables() {
         return mapper.showTables();
     }
 }
