@@ -1,0 +1,6 @@
+datasource:
+  driver-class-name:
+  url:
+  username:
+  password:
+  secret-key:
