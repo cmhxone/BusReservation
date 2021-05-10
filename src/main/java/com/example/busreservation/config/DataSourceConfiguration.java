@@ -29,7 +29,7 @@ public class DataSourceConfiguration {
     private String username;
 
     @Value("${password}")
-    private String password = "sWD3MdST92JSvr3SxGINfw==";
+    private String password;
 
     @Value("${secret-key}")
     private String secretKey;
@@ -38,9 +38,9 @@ public class DataSourceConfiguration {
     public DataSource dataSource() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName(driverClassName);
-        dataSourceBuilder.url(AESUtil.Decrypt(url, secretKey));
+        dataSourceBuilder.url(AESUtil.decrypt(url, secretKey));
         dataSourceBuilder.username(username);
-        dataSourceBuilder.password(AESUtil.Decrypt(password, secretKey));
+        dataSourceBuilder.password(AESUtil.decrypt(password, secretKey));
 
         return dataSourceBuilder.build();
     }

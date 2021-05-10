@@ -33,7 +33,7 @@ public class AESUtil {
      * @throws BadPaddingException
      * @author mhcho
      */
-    public static String Encrypt(String plainText, String secret) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static String encrypt(String plainText, String secret) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String result = null;
         String IV = secret.substring(0, 16);
 
@@ -61,7 +61,7 @@ public class AESUtil {
      * @throws BadPaddingException
      * @author mhcho
      */
-    public static String Decrypt(String encryptedText, String secret) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static String decrypt(String encryptedText, String secret) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String result = null;
         String IV = secret.substring(0, 16);
 
