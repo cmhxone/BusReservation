@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Driver {
 
-	private int id;
-	private String name;
+	private String driverid;
+	private String drivername;
 }
