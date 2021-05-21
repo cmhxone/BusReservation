@@ -1,12 +1,14 @@
 package com.example.busreservation.mapper;
 
-import com.example.busreservation.dto.Driver;
+import java.util.Optional;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Optional;
+import com.example.busreservation.authentication.detail.DriverUserDetails;
 
 @Mapper
 public interface DriverMapper {
-    public Optional<Driver> getDriverById(@Param(value = "driverId") String driverId);
+	public Optional<DriverUserDetails> getDriver(@Param(value = "driverId") String driverId,
+			@Param(value = "driverName") String driverName);
 }

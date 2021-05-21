@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.ord/DTD Mapper 3.0/EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.busreservation.mapper.DriverMapper">
-    <select id="getDriverById" resultType="com.example.busreservation.dto.Driver">
+    <select id="getDriver" resultType="com.example.busreservation.authentication.detail.DriverUserDetails">
         SELECT driverid,
                drivername
         FROM
             v_driver
-        WHERE driverid = #{driverId};
+        WHERE driverid = #{driverId} AND drivername = #{driverName};
     </select>
 </mapper>
