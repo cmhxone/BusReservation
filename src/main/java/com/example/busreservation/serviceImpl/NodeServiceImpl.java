@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class NodeServiceImpl implements NodeService {
 
     @Autowired
-    NodeMapper mapper;
+    private NodeMapper mapper;
 
     @Override
     public boolean insertOrUpdateNode(String nodeid, String nodeno, String nodename, String gpslati, String gpslong) {
