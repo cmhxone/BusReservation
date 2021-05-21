@@ -94,10 +94,14 @@ public class RESTUtil {
         for (Integer i=0; i<jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             HashMap<String, String> jsonData = new HashMap<>();
-
+            
             // 내부 해쉬맵에 저장하는 부분
             for (String property : propertyList) {
-                jsonData.put(property, jsonObject.getString(property));
+            	try {
+            		jsonData.put(property, jsonObject.getString(property));
+            	} catch (JSONException e) {
+            		jsonData.put(property, "");
+            	}
             }
 
             // 결과 값(외부해쉬맵)에 값을 전달
