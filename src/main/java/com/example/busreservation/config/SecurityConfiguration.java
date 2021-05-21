@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
+		auth.authenticationProvider(driverAuthenticationProvider());
 	}
 
 	@Override
@@ -44,8 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.formLogin();
 	}
 	
+	/**
+	 * 기사 사이트 로그인 제공
+	 * 
+	 * @return
+	 */
 	@Bean
-	public AuthenticationProvider authenticationProvider() {
+	public AuthenticationProvider driverAuthenticationProvider() {
 		return new DriverAuthenticationProvider();
 	}
 
