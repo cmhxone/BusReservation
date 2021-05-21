@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.example.busreservation.mapper.RouteMapper;
 import com.example.busreservation.service.RouteService;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class RouteServiceImpl implements RouteService {
 	
@@ -21,6 +24,11 @@ public class RouteServiceImpl implements RouteService {
 									   String startvehicletime,
 									   String endvehicletime) {
 		return mapper.insertOrUpdateRoute(routeid, routeno, routetp, startnodenm, endnodenm, startvehicletime, endvehicletime);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllRoutes() {
+		return mapper.getAllRoutes();
 	}
 
 }

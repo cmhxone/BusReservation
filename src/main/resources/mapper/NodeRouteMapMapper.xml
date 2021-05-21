@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.ord/DTD Mapper 3.0/EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.busreservation.mapper.NodeRouteMapMapper">
+    <delete id="deleteAllNodeRouteMap">
+        DELETE FROM t_noderoutemap
+    </delete>
+    <insert id="updateNodeRouteMap">
+        MERGE INTO t_noderoutemap USING DUAL ON nodeid = #{nodeid} AND routeid = #{routeid}
+            WHEN NOT MATCHED THEN INSERT VALUES (#{nodeid}, #{routeid})
+            WHEN MATCHED THEN UPDATE SET nodeid = #{nodeid}, routeid = #{routeid}
+    </insert>
+</mapper>

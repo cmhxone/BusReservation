@@ -6,6 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -16,6 +19,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @ConfigurationProperties("datasource")
+@EnableTransactionManagement
 @Configuration
 public class DataSourceConfiguration {
 
@@ -43,5 +47,10 @@ public class DataSourceConfiguration {
         dataSourceBuilder.password(AESUtil.decrypt(password, secretKey));
 
         return dataSourceBuilder.build();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        return new DataSourceTransactionManager(dataSource());
     }
 }

@@ -7,4 +7,16 @@
             WHEN NOT MATCHED THEN INSERT VALUES (#{routeid}, #{routeno}, #{routetp}, #{startnodenm}, #{endnodenm}, #{startvehicletime}, #{endvehicletime})
             WHEN MATCHED THEN UPDATE SET routeno = #{routeno}, routetp = #{routetp}, startnodenm = #{startnodenm}, endnodenm = #{endnodenm}, startvehicletime = #{startvehicletime}, endvehicletime = #{endvehicletime}
     </insert>
+
+    <select id="getAllRoutes" resultType="HashMap">
+        SELECT routeid,
+               routeno,
+               routetp,
+               startnodenm,
+               endnodenm,
+               startvehicletime,
+               endvehicletime
+        FROM
+            v_route
+    </select>
 </mapper>
