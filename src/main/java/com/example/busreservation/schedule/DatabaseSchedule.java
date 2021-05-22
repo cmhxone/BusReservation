@@ -38,12 +38,12 @@ public class DatabaseSchedule {
     @Autowired
     private NodeRouteMapService nodeRouteMapService;
 
-    @Scheduled(cron = "0 0 9-18/4 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
         updateCityTable();
         updateNodeTable();
         updateRouteTable();
-        updateNodeRouteMapTable();
+//        updateNodeRouteMapTable();
     }
 
     /**
