@@ -9,3 +9,4 @@ CREATE TABLE t_node(
 );
 
 CREATE INDEX idx_t_node_nodename ON t_node(nodename);
+CREATE INDEX idx_t_node_nodeno ON t_node(nodeno);

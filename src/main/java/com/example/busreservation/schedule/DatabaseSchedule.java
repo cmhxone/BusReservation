@@ -1,11 +1,10 @@
 package com.example.busreservation.schedule;
 
-import com.example.busreservation.service.CityService;
-import com.example.busreservation.service.NodeRouteMapService;
-import com.example.busreservation.service.NodeService;
-import com.example.busreservation.service.RouteService;
+import com.example.busreservation.service.*;
 import com.example.busreservation.util.RESTUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
@@ -14,6 +13,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,12 +38,15 @@ public class DatabaseSchedule {
     private CityService cityService;
     @Autowired
     private NodeRouteMapService nodeRouteMapService;
+    @Autowired
+    private NodeHeadToService nodeHeadToService;
 
     @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
         updateCityTable();
         updateNodeTable();
         updateRouteTable();
+        updateNodeHeadTo();
 //        updateNodeRouteMapTable();
     }
 
@@ -222,5 +226,23 @@ public class DatabaseSchedule {
             }
         }
         log.info("Successfully updated 'ROUTE' table");
+    }
+
+    public void updateNodeHeadTo() {
+        log.info("Prepare to update 'NODEHEADTO' table");
+        try {
+            log.info("Trying to update 'NODEHEADTO' table");
+            Reader in = new FileReader("/Users/jomuhyeon/node.csv");
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+            for (CSVRecord record : records) {
+                String nodeno = record.get(0);
+                String headto = record.get(2);
+                nodeHeadToService.insertOrUpdateNodeHeadTo(nodeno, headto);
+            }
+            log.info("Successfully updated 'NODEHEADTO' table");
+        } catch (Exception e) {
+            log.error("Failed to update 'NODEHEADTO' table");
+            e.printStackTrace(System.err);
+        }
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.ord/DTD Mapper 3.0/EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.busreservation.mapper.NodeHeadToMapper">
+    <insert id="insertOrUpdateNodeHeadTo">
+        MERGE INTO t_nodeheadto USING DUAL ON nodeno = #{nodeno}
+            WHEN NOT MATCHED THEN INSERT VALUES (#{nodeno}, #{headto})
+            WHEN MATCHED THEN UPDATE SET nodeno=#{nodeno}, headto=#{headto}
+    </insert>
+</mapper>
