@@ -1,5 +1,6 @@
 package com.example.busreservation.mapper;
 
+import com.example.busreservation.dto.Node;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,5 +16,5 @@ public interface NodeMapper {
                                       @Param("gpslati") String gpslati,
                                       @Param("gpslong") String gpslong);
 
-    public List<Map<String, Object>> getAllNodes();
+    public List<Node> getAllNodes();
 }

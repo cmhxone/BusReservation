@@ -1,13 +1,12 @@
 package com.example.busreservation.serviceImpl;
 
+import com.example.busreservation.dto.Route;
+import com.example.busreservation.mapper.RouteMapper;
+import com.example.busreservation.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.busreservation.mapper.RouteMapper;
-import com.example.busreservation.service.RouteService;
-
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -27,7 +26,7 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllRoutes() {
+	public List<Route> getAllRoutes() {
 		return mapper.getAllRoutes();
 	}
 

@@ -8,7 +8,7 @@
             WHEN MATCHED THEN UPDATE SET routeno = #{routeno}, routetp = #{routetp}, startnodenm = #{startnodenm}, endnodenm = #{endnodenm}, startvehicletime = #{startvehicletime}, endvehicletime = #{endvehicletime}
     </insert>
 
-    <select id="getAllRoutes" resultType="HashMap">
+    <select id="getAllRoutes" resultType="com.example.busreservation.dto.Route">
         SELECT routeid,
                routeno,
                routetp,

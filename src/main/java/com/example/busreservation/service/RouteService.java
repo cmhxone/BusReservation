@@ -1,9 +1,9 @@
 package com.example.busreservation.service;
 
+import com.example.busreservation.dto.Route;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public interface RouteService {
@@ -15,5 +15,5 @@ public interface RouteService {
 								  	   String startvehicletime,
 								  	   String endvehicletime);
 
-	public List<Map<String, Object>> getAllRoutes();
+	public List<Route> getAllRoutes();
 }

@@ -8,7 +8,7 @@
             WHEN MATCHED THEN UPDATE SET nodeno=#{nodeno}, nodename=#{nodename}, gpslati=#{gpslati}, gpslong=#{gpslong}
     </insert>
 
-    <select id="getAllNodes" resultType="HashMap">
+    <select id="getAllNodes" resultType="com.example.busreservation.dto.Node">
         SELECT nodeid,
                nodeno,
                nodename,

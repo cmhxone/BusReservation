@@ -1,5 +1,6 @@
 package com.example.busreservation.serviceImpl;
 
+import com.example.busreservation.dto.Node;
 import com.example.busreservation.mapper.NodeMapper;
 import com.example.busreservation.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllNodes() {
+    public List<Node> getAllNodes() {
         return mapper.getAllNodes();
     }
 }

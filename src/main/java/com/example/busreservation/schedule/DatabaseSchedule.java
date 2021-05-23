@@ -1,5 +1,6 @@
 package com.example.busreservation.schedule;
 
+import com.example.busreservation.dto.Route;
 import com.example.busreservation.service.*;
 import com.example.busreservation.util.RESTUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ public class DatabaseSchedule {
     private String serviceKey;
     @Value("${city_code}")
     private String cityCode;
+    @Value("${csv_file}")
+    private String csvFile;
 
     @Autowired
     private NodeService nodeService;
@@ -191,7 +194,7 @@ public class DatabaseSchedule {
     public void updateNodeRouteMapTable() {
         log.info("Prepare to update 'ROUTE' table");
         // 모든 노선 정보를 DB에서 추출
-        List<Map<String, Object>> routes = routeService.getAllRoutes();
+        List<Route> routes = routeService.getAllRoutes();
         RESTUtil restUtil = new RESTUtil();
 
         // JSON 분석 시, 사용할 속성 값
@@ -205,19 +208,19 @@ public class DatabaseSchedule {
 
         log.info("Trying to update 'ROUTE' table");
         // 각 노선에 해당하는 정류장 값을 DB에 저장한다
-        for (Map<String, Object> route : routes) {
+        for (Route route : routes) {
             // REST 요청 파라미터 값
             HashMap<String, String> params = new HashMap<>();
             params.put("numOfRows", "10000");
             params.put("cityCode", cityCode);
-            params.put("routeId", route.get("ROUTEID").toString());
+            params.put("routeId", route.getRouteid());
 
             // REST 호출 시도
             try {
                 JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteAcctoThrghSttnList", serviceKey, params);
                 for (int j=0; j<jsonRequest.length(); j++) {
                     // 데이터 저장 시도
-                    nodeRouteMapService.updateNodeRouteMap(jsonRequest.getJSONObject(j).getString("nodeid").toString(), route.get("ROUTEID").toString());
+                    nodeRouteMapService.updateNodeRouteMap(jsonRequest.getJSONObject(j).getString("nodeid").toString(), route.getRouteid().toString());
                 }
             } catch (Exception e) {
                 e.printStackTrace(System.err);
@@ -232,7 +235,7 @@ public class DatabaseSchedule {
         log.info("Prepare to update 'NODEHEADTO' table");
         try {
             log.info("Trying to update 'NODEHEADTO' table");
-            Reader in = new FileReader("/Users/jomuhyeon/node.csv");
+            Reader in = new FileReader(csvFile);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String nodeno = record.get(0);
