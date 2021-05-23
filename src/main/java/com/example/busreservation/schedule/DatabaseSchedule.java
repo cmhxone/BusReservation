@@ -19,7 +19,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @ConfigurationProperties("data")
@@ -52,7 +51,6 @@ public class DatabaseSchedule {
         updateNodeTable();
         updateRouteTable();
         updateNodeHeadTo();
-//        updateNodeRouteMapTable();
 
         log.info("DB Updating scheduler finished!");
     }
