@@ -46,11 +46,15 @@ public class DatabaseSchedule {
 
     @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
+        log.info("DB Updating scheduler is running...");
+
         updateCityTable();
         updateNodeTable();
         updateRouteTable();
         updateNodeHeadTo();
 //        updateNodeRouteMapTable();
+
+        log.info("DB Updating scheduler finished!");
     }
 
     /**
