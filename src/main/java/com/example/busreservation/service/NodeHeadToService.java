@@ -10,4 +10,5 @@ public interface NodeHeadToService {
 
     public boolean insertOrUpdateNodeHeadTo(String nodeno, String headto);
     public List<Node> getAllNodeHeadToMap();
+    public List<Node> getNodeHeadToMap(int page, String nodename);
 }

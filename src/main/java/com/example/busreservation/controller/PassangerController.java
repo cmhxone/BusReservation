@@ -1,7 +1,6 @@
 package com.example.busreservation.controller;
 
 import com.example.busreservation.dto.Node;
-import com.example.busreservation.mapper.NodeHeadToMapper;
 import com.example.busreservation.service.NodeHeadToService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequestMapping("/passenger")
@@ -23,21 +21,29 @@ public class PassangerController {
     NodeHeadToService nodeHeadToService;
 
     @GetMapping("")
-    public String defaultPage(Model model) {
+    public String defaultPage(@RequestParam(name = "page", required = true, defaultValue = "0") int page,
+                              @RequestParam(name = "searchNodeName", required = false, defaultValue = "") String searchNodeName,
+                              Model model) {
 
-        List<Node> nodes = nodeHeadToService.getAllNodeHeadToMap();
-        List<String> nodelist = new ArrayList<>();
-
-        for (Node node : nodes) {
-            Object nodename = node.getNodename();
-            Object headto = node.getHeadto();
-            String headtostr = headto != null ? headto.toString() : "";
-            headtostr += headtostr.isEmpty() ? "" : " 방면";
-
-            nodelist.add(nodename + " " + headtostr);
+        int prevpage, nextpage;
+        // 페이지 한계 지정
+        if (page < 0) {
+            page = 0;
         }
 
-        model.addAttribute("nodes", nodelist);
+        // 리스트에 정류장 노드(방향 포함)들을 가져온다
+        List<Node> nodes = nodeHeadToService.getNodeHeadToMap(page, searchNodeName);
+
+        // 페이지 계산용
+        prevpage = page-1;
+        nextpage = page+1;
+
+        // 모델에 애트리뷰트 추가
+        model.addAttribute("nodes", nodes);
+        model.addAttribute("prevpage", prevpage);
+        model.addAttribute("currentpage", page);
+        model.addAttribute("nextpage", nextpage);
+        model.addAttribute("searchNodeName", searchNodeName);
 
         return "passenger/passenger";
     }

@@ -13,4 +13,6 @@ public interface NodeHeadToMapper {
     public boolean insertOrUpdateNodeHeadTo(@Param("nodeno") String nodeno,
                                             @Param("headto") String headto);
     public List<Node> getAllNodeHeadToMap();
+    public List<Node> getNodeHeadToMap(@Param("page") int page,
+                                        @Param("nodename") String nodename);
 }

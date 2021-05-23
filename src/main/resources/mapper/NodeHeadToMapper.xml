@@ -19,4 +19,18 @@
         LEFT OUTER JOIN v_nodeheadto AS head ON node.nodeno = head.nodeno
         ORDER BY node.nodename
     </select>
+
+    <select id="getNodeHeadToMap" resultType="com.example.busreservation.dto.Node">
+        SELECT node.nodeid,
+               node.nodeno,
+               node.nodename,
+               node.gpslati,
+               node.gpslong,
+               head.headto
+        FROM v_node AS node
+        LEFT OUTER JOIN v_nodeheadto AS head ON node.nodeno = head.nodeno
+        WHERE POSITION(#{nodename}, node.nodename)
+        ORDER BY node.nodeno
+        LIMIT #{page} * 20, 20
+    </select>
 </mapper>

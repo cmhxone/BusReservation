@@ -3,14 +3,34 @@
     <head th:include="head/head.html"/>
     <body>
         <div class="container">
-            <div class="row">
+            <div class="row m-5">
                 <h1 class="display-1">정류장 선택</h1>
             </div>
+            <div class="row m-5">
+                <form method="get">
+                    <input type="text" id="searchNodeName" name="searchNodeName" placeholder="정류장 이름"/>
+                    <input class="btn-primary" type="submit" value="조회"/>
+                </form>
+            </div>
             <div class="row" th:each="node : ${nodes}">
-                <button class="btn-outline-primary" th:text="${node}"></button>
+                <button class="btn-outline-primary" th:text="${node.nodename} + ' ' + (${node.headto} != null ? ${node.headto} + ' 방면' : '') "></button>
+            </div>
+            <div class="footer m-5">
+                <button class="btn-primary" th:if="${currentpage} > 0" th:onclick="'movePage('+${prevpage}+')'">이전 페이지</button>
+                <span th:text="${nextpage} + ' 페이지'"></span>
+                <button class="btn-primary" th:if="${nodes.size()} >= 20" th:onclick="'movePage('+${nextpage}+')'">다음 페이지</button>
             </div>
         </div>
 
+        <script type="application/javascript">
+            function movePage(page) {
+                let searchParam = new URLSearchParams(window.location.search)
+                let searchNodeName = searchParam.get('searchNodeName')
+                let url = '/passenger?page=' + page + '&searchNodeName='
+                url += searchNodeName == null ? '' : searchNodeName
+                location.href=url
+            }
+        </script>
         <div th:include="script/script.html"/>
     </body>
 </html>
