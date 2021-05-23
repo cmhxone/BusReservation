@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="head/head.html"/>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1 class="display-1">정류장 선택</h1>
+            </div>
+            <div class="row" th:each="node : ${nodes}">
+                <button class="btn-outline-primary" th:text="${node}"></button>
+            </div>
+        </div>
+
+        <div th:include="script/script.html"/>
+    </body>
+</html>
