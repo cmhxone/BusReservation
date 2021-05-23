@@ -1,0 +1,19 @@
+# Server Configuration
+server:
+  port: 8080
+
+# H2 Database Configuration
+spring:
+  h2:
+    console:
+      enabled: true
+  devtools:
+    restart:
+      enabled: true
+
+# MyBatis Configuration
+mybatis:
+  type-aliases-package: com.example.busreservation.mapper
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    default-statement-timeout: 2000
