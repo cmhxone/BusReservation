@@ -94,7 +94,7 @@ public class RESTUtil {
             // 내부 해쉬맵에 저장하는 부분
             for (String property : propertyList) {
             	try {
-            		jsonData.put(property, jsonObject.getString(property));
+            		jsonData.put(property, jsonObject.get(property).toString());
             	} catch (JSONException e) {
             		jsonData.put(property, "");
             	}
