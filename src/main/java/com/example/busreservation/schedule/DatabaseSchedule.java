@@ -1,9 +1,11 @@
 package com.example.busreservation.schedule;
 
-import com.example.busreservation.dto.Route;
-import com.example.busreservation.service.*;
-import com.example.busreservation.util.RESTUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.io.FileReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.json.JSONArray;
@@ -14,11 +16,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.example.busreservation.dto.Route;
+import com.example.busreservation.service.CityService;
+import com.example.busreservation.service.NodeHeadToService;
+import com.example.busreservation.service.NodeRouteMapService;
+import com.example.busreservation.service.NodeService;
+import com.example.busreservation.service.RouteService;
+import com.example.busreservation.util.RESTUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ConfigurationProperties("data")
@@ -233,15 +239,22 @@ public class DatabaseSchedule {
         log.info("Successfully updated 'ROUTE' table");
     }
 
+    /**
+     * 정류장의 방향을 DB에 저장한다
+     */
     public void updateNodeHeadTo() {
         log.info("Prepare to update 'NODEHEADTO' table");
         try {
             log.info("Trying to update 'NODEHEADTO' table");
+            
+            // CSV 파일을 읽어 구문을 분석한다
             Reader in = new FileReader(csvFile);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String nodeno = record.get(0);
                 String headto = record.get(2);
+                
+                // 데이터베이스에 저장
                 nodeHeadToService.insertOrUpdateNodeHeadTo(nodeno, headto);
             }
             log.info("Successfully updated 'NODEHEADTO' table");
