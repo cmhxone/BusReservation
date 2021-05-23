@@ -42,7 +42,7 @@ public class DataSourceConfiguration {
     public DataSource dataSource() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName(driverClassName);
-        dataSourceBuilder.url(AESUtil.decrypt(url, secretKey));
+        dataSourceBuilder.url(url);
         dataSourceBuilder.username(username);
         dataSourceBuilder.password(AESUtil.decrypt(password, secretKey));
 
