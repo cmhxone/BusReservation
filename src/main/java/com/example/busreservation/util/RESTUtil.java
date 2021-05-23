@@ -1,20 +1,20 @@
 package com.example.busreservation.util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * REST 요청 관련 유틸리티<br><br>
