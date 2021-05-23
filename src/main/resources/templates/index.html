@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8"/>
-        <title>진주 시내버스</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-    </head>
+    <head th:insert="head/head.html"/>
 
     <body>
         <div class="container mt-5 mb-5">
-            <div class="row align-items-center offset-3">
-                <div class="col-4 align-self-center">
+            <div class="row align-items-center">
+                <div class="col-6 align-self-center">
                     <button class="btn btn-primary btn-lg btn-block" style="height: 200px; text-align: center;" onclick="location.href='/passenger'">승객 페이지</button>
                 </div>
-                <div class="col-4 align-self-center">
+                <div class="col-6 align-self-center">
                     <button class="btn btn-primary btn-lg btn-block" style="height: 200px; text-align: center;" onclick="location.href='/driver'">기사 페이지</button>
                 </div>
             </div>
         </div>
 
-        <script src="http://code.jquery.com/jquery.js"></script>
-        <script src="js/bootstrap.bundle.js"></script>
+        <div th:insert="script/script.html"/>
     </body>
 </html>
