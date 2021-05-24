@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head th:include="head/head.html"/>
+	<body>
+	   <div class="container">
+	       <div class="row m-5">
+	           <div class="col-6">
+	               <h1 class="display-1">도착 노선정보&nbsp;</h1>
+	           </div>
+	           <div class="col-6">
+                    <h1 href="/" class="display-1 btn-secondary" onclick="location.href='/'">홈으로</h1>
+                </div>
+	       </div>
+	       
+	       <div class="row m-5">
+	           <div class="col-12">
+	               <h1 class="display-1">
+	                   <span th:text="${node.nodename} + ' 정류장'"></span>
+	                   <span th:text="${node.headto} ? ${node.headto} + ' 방면' : ''"></span>
+	               </h1>
+	           </div>
+	       </div>
+	       
+	       <div th:each="route : ${routes}">
+	           <button class="btn-primary p-2" th:text="${route.routeno}"></button>
+	           <span>
+	               <span th:text="${route.arrtime} > 0 ? ${route.arrtime} + '분 후 도착' : '잠시 후 도착'"></span>
+	               <span th:text="${route.arrprevstationcnt} + '정류장 전'"></span>
+	               <span th:text="'(' + ${route.vehicletp} + ')'"></span>
+	           </span>
+	       </div>
+	   </div>
+	   
+	   <div th:include="script/script.html"/>
+	</body>
+</html>
