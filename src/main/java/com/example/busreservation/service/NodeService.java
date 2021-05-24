@@ -10,4 +10,5 @@ import java.util.Map;
 public interface NodeService {
     public boolean insertOrUpdateNode(String nodeid, String nodeno, String nodename, String gpslati, String gpslong);
     public List<Node> getAllNodes();
+    public Node getNodeByNodeID(String nodeid);
 }

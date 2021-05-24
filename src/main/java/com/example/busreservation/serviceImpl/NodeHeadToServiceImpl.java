@@ -28,4 +28,10 @@ public class NodeHeadToServiceImpl implements NodeHeadToService {
     public List<Node> getNodeHeadToMap(int page, String nodename) {
         return mapper.getNodeHeadToMap(page, nodename);
     }
+
+	@Override
+	public Node getNodeHeadToMapByNodeID(String nodeid) {
+		return mapper.getNodeHeadToMapByNodeID(nodeid);
+	}
+    
 }

@@ -24,4 +24,11 @@ public class NodeServiceImpl implements NodeService {
     public List<Node> getAllNodes() {
         return mapper.getAllNodes();
     }
+
+	@Override
+	public Node getNodeByNodeID(String nodeid) {
+		return mapper.getNodeByNodeID(nodeid);
+	}
+    
+    
 }

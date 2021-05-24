@@ -17,4 +17,16 @@
         FROM
             v_node;
     </select>
+    
+    <select id="getNodeByNodeID" resultType="com.example.busreservation.dto.Node">
+        SELECT nodeid,
+               nodeno,
+               nodename,
+               gpslati,
+               gpslong 
+        FROM 
+            v_node 
+        WHERE 
+            nodeid = #{nodeid};
+    </select>
 </mapper>

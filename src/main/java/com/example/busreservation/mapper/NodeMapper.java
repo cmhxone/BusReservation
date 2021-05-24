@@ -17,4 +17,6 @@ public interface NodeMapper {
                                       @Param("gpslong") String gpslong);
 
     public List<Node> getAllNodes();
+    
+    public Node getNodeByNodeID(@Param("nodeid") String nodeid);
 }
