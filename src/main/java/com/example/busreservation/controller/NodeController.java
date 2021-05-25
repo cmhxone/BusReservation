@@ -89,6 +89,7 @@ public class NodeController {
 		}
 		
 		model.addAttribute("result", result);
+		model.addAttribute("nodeid", nodeid);
 		
 		/*
 //		// FOR TEST

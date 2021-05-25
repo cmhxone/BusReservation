@@ -22,7 +22,7 @@
 	       </div>
 	       
 	       <div th:if="${result} == true" th:each="route : ${routes}">
-	           <button class="btn-primary p-2" th:text="${route.routeno}"></button>
+	           <button class="btn-primary p-2" th:text="${route.routeno}" th:onclick="'location.href=\'/route/' + @{${route.routeid}} + '/' + @{${nodeid}} + '\''"></button>
 	           <span>
 	               <span th:text="${route.arrtime} > 0 ? ${route.arrtime} + '분 후 도착' : '잠시 후 도착'"></span>
 	               <span th:text="${route.arrprevstationcnt} + '정류장 전'"></span>
