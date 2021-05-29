@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.busreservation.url.APIURL;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.json.JSONArray;
@@ -79,7 +80,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getCtyCodeList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_CITY_CODE, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
 
             // JSON 응답을 분석해 DB 업데이트
@@ -125,7 +126,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getSttnNoList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_NODE_LIST, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
 
             // JSON 응답을 분석해 DB 업데이트
@@ -172,7 +173,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_ROUTE_LIST, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
             
             // JSON 응답을 분석해 DB 업데이트
@@ -225,7 +226,7 @@ public class DatabaseSchedule {
 
             // REST 호출 시도
             try {
-                JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteAcctoThrghSttnList", serviceKey, params);
+                JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_ROUTE_THROUGH_NODE_LIST, serviceKey, params);
                 for (int j=0; j<jsonRequest.length(); j++) {
                     // 데이터 저장 시도
                     nodeRouteMapService.updateNodeRouteMap(jsonRequest.getJSONObject(j).getString("nodeid").toString(), route.getRouteid().toString());
