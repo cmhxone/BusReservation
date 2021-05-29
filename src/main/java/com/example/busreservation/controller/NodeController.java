@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.busreservation.url.APIURL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,15 @@ public class NodeController {
 	public String getNode(@PathVariable(name = "nodeid", required = true) String nodeid,
 						  HttpServletRequest http,
 						  Model model) {
-		
+
+		// 결과값 존재 여부 확인을 위해
 		boolean result = false;
 		Node node = nodeHeadToService.getNodeHeadToMapByNodeID(nodeid);
 		model.addAttribute("node", node);
 		
 		// REST 요청 설정
 		RESTUtil restUtil = new RESTUtil();
-		String url = "http://openapi.tago.go.kr/openapi/service/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList";
+		String url = APIURL.GET_NODE_ARR_ROUTE;
 		HashMap<String, String> params = new HashMap<>();
 		ArrayList<String> properties = new ArrayList<>();
 		
@@ -91,23 +93,13 @@ public class NodeController {
 		model.addAttribute("result", result);
 		model.addAttribute("nodeid", nodeid);
 		
-		/*
-//		// FOR TEST
-//		HashMap<String, String> route = new HashMap<String, String>();
-//		ArrayList<HashMap<String, String>> routes = new ArrayList<HashMap<String,String>>();
-//		route.put("nodenm", "킹상대");
-//		route.put("routetp", "시내버스");
-//		route.put("arrprevstationcnt", "11");
-//		route.put("vehicletp", "저상버스");
-//		route.put("routeno", "352");
-//		route.put("arrtime", "3");
-//		Integer arrtime = Integer.parseInt(route.get("arrtime"));
-//		arrtime /= 60;
-//		route.replace("arrtime", arrtime.toString());
-//		routes.add(route);
-//		model.addAttribute("routes", routes);
-		*/
-		
 		return "node/node";
+	}
+
+	@GetMapping("/{nodeid}/refresh")
+	public String refreshNode(@PathVariable(name = "nodeid", required = true) String nodeid,
+							  HttpServletRequest http,
+							  Model model) {
+		return getNode(nodeid, http, model) + ":: #arrRoutes";
 	}
 }
