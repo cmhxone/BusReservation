@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
+@EnableWebSocket
 @EnableAsync
 @EnableScheduling
 @PropertySource({"classpath:/properties/datasource.yml", "classpath:/properties/datagokr.yml"})
