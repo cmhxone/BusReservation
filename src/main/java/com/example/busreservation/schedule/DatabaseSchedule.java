@@ -1,31 +1,26 @@
 package com.example.busreservation.schedule;
 
-import java.io.FileReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import com.example.busreservation.dto.Route;
+import com.example.busreservation.service.*;
 import com.example.busreservation.url.APIURL;
+import com.example.busreservation.util.RESTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.busreservation.dto.Route;
-import com.example.busreservation.service.CityService;
-import com.example.busreservation.service.NodeHeadToService;
-import com.example.busreservation.service.NodeRouteMapService;
-import com.example.busreservation.service.NodeService;
-import com.example.busreservation.service.RouteService;
-import com.example.busreservation.util.RESTUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import java.io.FileReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @ConfigurationProperties("data")
@@ -50,6 +45,7 @@ public class DatabaseSchedule {
     @Autowired
     private NodeHeadToService nodeHeadToService;
 
+    @Bean
     @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
         log.info("DB Updating scheduler is running...");
