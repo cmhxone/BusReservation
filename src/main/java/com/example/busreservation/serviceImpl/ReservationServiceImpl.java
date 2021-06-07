@@ -20,7 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public boolean reserve(String nodeid, String routeid) {
 
-        reservationMapper.reserve(nodeid, routeid);
+//        reservationMapper.reserve(nodeid, routeid);
         
         Reservation reservation = new Reservation(nodeid, routeid);
 

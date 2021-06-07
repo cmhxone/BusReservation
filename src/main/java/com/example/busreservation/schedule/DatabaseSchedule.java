@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +44,7 @@ public class DatabaseSchedule {
     @Autowired
     private NodeHeadToService nodeHeadToService;
 
-    @Bean
+//    @Bean
     @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
         log.info("DB Updating scheduler is running...");
