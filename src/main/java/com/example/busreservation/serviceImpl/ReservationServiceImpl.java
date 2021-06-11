@@ -23,7 +23,6 @@ public class ReservationServiceImpl implements ReservationService {
 //        reservationMapper.reserve(nodeid, routeid);
         
         Reservation reservation = new Reservation(nodeid, routeid);
-
         publisher.publishEvent(new ReservedEvent(reservation));
 
         return true;
