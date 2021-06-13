@@ -1,13 +1,12 @@
 package com.example.busreservation.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.example.busreservation.dto.Node;
+import com.example.busreservation.repository.ReservationRepository;
+import com.example.busreservation.service.NodeHeadToService;
 import com.example.busreservation.url.APIURL;
+import com.example.busreservation.util.RESTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,11 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.busreservation.dto.Node;
-import com.example.busreservation.service.NodeHeadToService;
-import com.example.busreservation.util.RESTUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @ConfigurationProperties("data")
 @Slf4j
@@ -33,7 +30,9 @@ public class NodeController {
 	private String serviceKey;
 	@Value("${city_code}")
 	private String cityCode;
-	
+
+	@Autowired
+	private ReservationRepository reservationRepository;
 	@Autowired
 	private NodeHeadToService nodeHeadToService;
 
@@ -79,6 +78,11 @@ public class NodeController {
 					Integer arrtime = Integer.parseInt(map.get("arrtime"));
 					arrtime /= 60;
 					map.replace("arrtime", arrtime.toString());
+					if (reservationRepository.getReservation().contains(map.get("routeno"))) {
+						map.put("reserved", "true");
+					} else {
+						map.put("reserved", "false");
+					}
 					routes.add(map);
 				});
 				

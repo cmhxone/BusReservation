@@ -29,6 +29,7 @@
 					   <span th:text="${route.arrprevstationcnt} + '정류장 전'"></span>
 					   <span th:text="'(' + ${route.vehicletp} + ')'"></span>
 				   </span>
+				   <button th:if="${route.reserved == 'true'}" class="btn-primary p-2" th:text="예약취소" th:onclick="'location.href=\'/cancel/' + @{${route.routeid}} + '/' + @{${nodeid}} + '\''"></button>
 			   </div>
 			   <div th:unless="${result} == true">
 				   <p>도착 예정 버스가 없습니다.</p>
