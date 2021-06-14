@@ -1,5 +1,5 @@
 CREATE TABLE t_cityroutemap (
-    citycode INT NOT NULL,
+    citycode VARCHAR(10) NOT NULL,
     routeid VARCHAR(20) NOT NULL,
 
     CONSTRAINT fk_t_cityroutemap_citycode FOREIGN KEY(citycode) REFERENCES t_city(citycode),

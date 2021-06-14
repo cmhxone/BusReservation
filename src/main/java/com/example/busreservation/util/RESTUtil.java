@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
@@ -68,9 +68,25 @@ public class RESTUtil {
         reqResJSON = new JSONObject((Map<?, ?>)resultMap.getBody());
         reqResJSON = reqResJSON.getJSONObject("response");
         reqResJSON = reqResJSON.getJSONObject("body");
+        
+        try {
+	        // 결과가 없는 경우 NULL 반환
+	        if (reqResJSON.getInt("totalCount") < 1) {
+	        	return null;
+	        }
+	        // 결과값이 하나인 경우 Array로 변환 후 반환
+	        else if (reqResJSON.getInt("totalCount") == 1 ) {
+	        	result = new JSONArray();
+	        	result.put(reqResJSON.getJSONObject("items").getJSONObject("item"));
+	        	return result;
+	        }
+        } catch (JSONException e) {
+        	
+        }
+        
         reqResJSON = reqResJSON.getJSONObject("items");
-        result = reqResJSON.getJSONArray("item");
-
+    	result = reqResJSON.getJSONArray("item");
+    	
         return result;
     }
 
@@ -94,7 +110,7 @@ public class RESTUtil {
             // 내부 해쉬맵에 저장하는 부분
             for (String property : propertyList) {
             	try {
-            		jsonData.put(property, jsonObject.getString(property));
+            		jsonData.put(property, jsonObject.get(property).toString());
             	} catch (JSONException e) {
             		jsonData.put(property, "");
             	}

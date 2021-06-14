@@ -1,6 +1,6 @@
 CREATE TABLE t_nodeheadto (
     nodeno VARCHAR(10) NOT NULL,
-    headto VARCHAR(30),
-
-    CONSTRAINT fk_t_nodeheadto_nodeid FOREIGN KEY(nodeid) REFERENCES t_node(nodeid)
+    headto VARCHAR(30)
 );
+
+CREATE INDEX idx_t_nodeheadto_nodeno ON t_nodeheadto(nodeno);

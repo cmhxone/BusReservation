@@ -1,6 +1,6 @@
 datasource:
   driver-class-name: org.h2.Driver
-  url: JJGKl9Y6qULGiHc/41RFYbVWi9Qkyia7uLTTpsEjDB/U0BHNGox4/heX79E+zrBu
+  url: jdbc:h2:tcp://bus.muhyeon.com:9092/gnuDB
   username: sa
   password: sWD3MdST92JSvr3SxGINfw==
   secret-key: #GYEONGSANG_NATIONAL_UNIVERSITY#

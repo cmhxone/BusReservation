@@ -2,13 +2,14 @@ package com.example.busreservation.schedule;
 
 import com.example.busreservation.dto.Route;
 import com.example.busreservation.service.*;
+import com.example.busreservation.url.APIURL;
 import com.example.busreservation.util.RESTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @ConfigurationProperties("data")
@@ -44,13 +44,17 @@ public class DatabaseSchedule {
     @Autowired
     private NodeHeadToService nodeHeadToService;
 
+//    @Bean
     @Scheduled(cron = "0 0 * * * *")
     public void updateDB() {
+        log.info("DB Updating scheduler is running...");
+
         updateCityTable();
         updateNodeTable();
         updateRouteTable();
         updateNodeHeadTo();
-//        updateNodeRouteMapTable();
+
+        log.info("DB Updating scheduler finished!");
     }
 
     /**
@@ -71,7 +75,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getCtyCodeList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_CITY_CODE, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
 
             // JSON 응답을 분석해 DB 업데이트
@@ -117,7 +121,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getSttnNoList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_NODE_LIST, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
 
             // JSON 응답을 분석해 DB 업데이트
@@ -164,7 +168,7 @@ public class DatabaseSchedule {
         // REST 호출 시도
         RESTUtil restUtil = new RESTUtil();
         try {
-            JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteNoList", serviceKey, parameter);
+            JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_ROUTE_LIST, serviceKey, parameter);
             HashMap<String, HashMap<String, String>> jsonResponse = restUtil.getMapData(jsonRequest, property);
             
             // JSON 응답을 분석해 DB 업데이트
@@ -217,7 +221,7 @@ public class DatabaseSchedule {
 
             // REST 호출 시도
             try {
-                JSONArray jsonRequest = restUtil.getJSONRequest("http://openapi.tago.go.kr/openapi/service/BusRouteInfoInqireService/getRouteAcctoThrghSttnList", serviceKey, params);
+                JSONArray jsonRequest = restUtil.getJSONRequest(APIURL.GET_ROUTE_THROUGH_NODE_LIST, serviceKey, params);
                 for (int j=0; j<jsonRequest.length(); j++) {
                     // 데이터 저장 시도
                     nodeRouteMapService.updateNodeRouteMap(jsonRequest.getJSONObject(j).getString("nodeid").toString(), route.getRouteid().toString());
@@ -231,15 +235,22 @@ public class DatabaseSchedule {
         log.info("Successfully updated 'ROUTE' table");
     }
 
+    /**
+     * 정류장의 방향을 DB에 저장한다
+     */
     public void updateNodeHeadTo() {
         log.info("Prepare to update 'NODEHEADTO' table");
         try {
             log.info("Trying to update 'NODEHEADTO' table");
+            
+            // CSV 파일을 읽어 구문을 분석한다
             Reader in = new FileReader(csvFile);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String nodeno = record.get(0);
                 String headto = record.get(2);
+                
+                // 데이터베이스에 저장
                 nodeHeadToService.insertOrUpdateNodeHeadTo(nodeno, headto);
             }
             log.info("Successfully updated 'NODEHEADTO' table");

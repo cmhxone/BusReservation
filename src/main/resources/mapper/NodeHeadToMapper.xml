@@ -33,4 +33,16 @@
         ORDER BY node.nodeno
         LIMIT #{page} * 20, 20
     </select>
+    
+    <select id="getNodeHeadToMapByNodeID" resultType="com.example.busreservation.dto.Node">
+        SELECT node.nodeid,
+               node.nodeno,
+               node.nodename,
+               node.gpslati,
+               node.gpslong,
+               head.headto 
+        FROM v_node AS node 
+        LEFT OUTER JOIN v_nodeheadto AS head ON node.nodeno = head.nodeno 
+        WHERE nodeid = #{nodeid}
+    </select>
 </mapper>

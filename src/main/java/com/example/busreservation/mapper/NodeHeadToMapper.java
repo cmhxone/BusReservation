@@ -15,4 +15,5 @@ public interface NodeHeadToMapper {
     public List<Node> getAllNodeHeadToMap();
     public List<Node> getNodeHeadToMap(@Param("page") int page,
                                         @Param("nodename") String nodename);
+    public Node getNodeHeadToMapByNodeID(@Param("nodeid") String nodeid);
 }
