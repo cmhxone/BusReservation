@@ -1,2 +1,3 @@
-# BusReservation
-Bus Appointment
+# 버스 예약
+
+실제 버스가 예약되진 않는다.
